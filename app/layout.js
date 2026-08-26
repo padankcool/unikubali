@@ -1,8 +1,8 @@
-import "./globals.css"; // <- Baris ini sangat krusial!
+import "./globals.css"; // <--- INI NYAWA DESAINNYA, JANGAN SAMPAI HILANG
 
 export const metadata = {
   title: "Unikubali | Etalase Aksesoris Rumah",
-  description: "Koleksi aksesoris rumah buatan tangan estetik langsung dari Bali.",
+  description: "Koleksi aksesoris rumah buatan tangan estetik.",
 };
 
 export default function RootLayout({ children }) {
