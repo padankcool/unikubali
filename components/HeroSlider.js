@@ -46,7 +46,6 @@ export default function HeroSlider() {
       right: '50%', 
       marginLeft: '-50vw', 
       marginRight: '-50vw', 
-      marginTops: 0,
       padding: 0, 
       fontFamily: 'sans-serif', 
       overflow: 'hidden' 
@@ -56,23 +55,26 @@ export default function HeroSlider() {
         .hero-slider-container {
           position: relative;
           width: 100vw;
-          height: calc(100vh - 90px);
-          min-height: 500px;
+          height: 520px; /* Ukuran layar lebar (widescreen) yang proporsional dan elegan */
         }
         @media (max-width: 768px) {
           .hero-slider-container {
-            height: 400px !important;
+            height: 340px !important;
           }
           .hero-title {
-            font-size: 22px !important;
+            font-size: 18px !important;
           }
           .hero-subtitle {
-            font-size: 13px !important;
+            font-size: 12px !important;
+          }
+          .hero-caption-box {
+            padding: 12px 16px !important;
+            max-width: 85% !important;
           }
           .slider-arrow {
-            width: 36px !important;
-            height: 36px !important;
-            font-size: 14px !important;
+            width: 32px !important;
+            height: 32px !important;
+            font-size: 12px !important;
           }
         }
       `}</style>
@@ -99,25 +101,35 @@ export default function HeroSlider() {
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />
             
+            {/* Kotak Latar Belakang Transparan Hitam (Elegan / Glassmorphism) untuk Teks */}
             <div style={{
               position: 'absolute',
-              bottom: 0,
-              left: 0,
-              right: 0,
-              background: 'linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0.3), transparent)',
-              padding: '60px 50px',
-              color: '#ffffff'
+              bottom: '40px',
+              left: '50px',
+              zIndex: 2,
+              maxWidth: '550px'
             }}>
-              <h2 className="hero-title" style={{ fontSize: '38px', fontWeight: '800', margin: '0 0 10px 0', letterSpacing: '1px' }}>
-                {slide.title}
-              </h2>
-              <p className="hero-subtitle" style={{ fontSize: '16px', margin: 0, opacity: 0.95 }}>
-                {slide.subtitle}
-              </p>
+              <div className="hero-caption-box" style={{
+                backgroundColor: 'rgba(0, 0, 0, 0.55)', // Hitam transparan elegan
+                backdropFilter: 'blur(6px)', // Efek blur kaca tipis yang mewah
+                padding: '20px 24px',
+                borderRadius: '10px',
+                border: '1px solid rgba(255, 255, 255, 0.15)',
+                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+                color: '#ffffff'
+              }}>
+                <h2 className="hero-title" style={{ fontSize: '26px', fontWeight: '800', margin: '0 0 8px 0', letterSpacing: '0.5px' }}>
+                  {slide.title}
+                </h2>
+                <p className="hero-subtitle" style={{ fontSize: '14px', margin: 0, opacity: 0.9, lineHeight: '1.4' }}>
+                  {slide.subtitle}
+                </p>
+              </div>
             </div>
           </div>
         ))}
 
+        {/* Tombol Panah Kiri */}
         <button 
           onClick={prevSlide}
           className="slider-arrow"
@@ -128,6 +140,7 @@ export default function HeroSlider() {
           ❮
         </button>
 
+        {/* Tombol Panah Kanan */}
         <button 
           onClick={nextSlide}
           className="slider-arrow"
@@ -138,22 +151,23 @@ export default function HeroSlider() {
           ❯
         </button>
 
+        {/* Indikator Titik (Dots) di Kanan Bawah */}
         <div style={{
           position: 'absolute',
-          bottom: '30px',
-          right: '50px',
+          bottom: '25px',
+          right: '40px',
           display: 'flex',
           gap: '8px',
-          zIndex: 2
+          zIndex: 3
         }}>
           {slides.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentIndex(index)}
               style={{
-                width: currentIndex === index ? '30px' : '10px',
-                height: '10px',
-                borderRadius: '5px',
+                width: currentIndex === index ? '26px' : '8px',
+                height: '8px',
+                borderRadius: '4px',
                 backgroundColor: currentIndex === index ? '#ffffff' : 'rgba(255,255,255,0.5)',
                 border: 'none',
                 cursor: 'pointer',
@@ -171,21 +185,21 @@ export default function HeroSlider() {
 const arrowStyle = (position) => ({
   position: 'absolute',
   top: '50%',
-  [position]: '30px',
+  [position]: '25px',
   transform: 'translateY(-50%)',
   backgroundColor: 'rgba(255,255,255,0.75)',
   border: 'none',
   borderRadius: '50%',
-  width: '48px',
-  height: '48px',
+  width: '44px',
+  height: '44px',
   cursor: 'pointer',
-  fontSize: '18px',
+  fontSize: '16px',
   fontWeight: 'bold',
   color: '#1f2937',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  zIndex: 2,
+  zIndex: 3,
   transition: 'background 0.2s ease',
-  boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
+  boxShadow: '0 4px 10px rgba(0,0,0,0.25)'
 });
