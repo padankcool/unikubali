@@ -27,7 +27,7 @@ export default function Navbar() {
         }
       `}</style>
 
-      {/* --- TAMPILAN DESKTOP (Proporsional: Kiri Logo, Tengah Menu, Kanan Sosmed) --- */}
+      {/* --- TAMPILAN DESKTOP (Logo Lebih Besar di Kiri) --- */}
       <div className="desktop-navbar">
         
         {/* 1. Logo di Kiri */}
@@ -36,7 +36,7 @@ export default function Navbar() {
             <img 
               src="/logo.png" 
               alt="Unikubali Logo" 
-              style={{ height: '40px', objectFit: 'contain', cursor: 'pointer' }} 
+              style={{ height: '55px', objectFit: 'contain', cursor: 'pointer' }} 
             />
           </a>
         </div>
@@ -71,13 +71,13 @@ export default function Navbar() {
 
       </div>
 
-      {/* --- TAMPILAN MOBILE (Logo di Kiri, Tombol Hamburger di Kanan) --- */}
+      {/* --- TAMPILAN MOBILE --- */}
       <div className="mobile-navbar">
         <a href="#home">
           <img 
             src="/logo.png" 
             alt="Unikubali Logo" 
-            style={{ height: '34px', objectFit: 'contain', cursor: 'pointer' }} 
+            style={{ height: '42px', objectFit: 'contain', cursor: 'pointer' }} 
           />
         </a>
 
@@ -102,7 +102,7 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Menu Dropdown khusus HP (Rata Tengah saat dibuka) */}
+      {/* Menu Dropdown khusus HP */}
       {isOpen && (
         <div style={{ 
           marginTop: '16px', 
