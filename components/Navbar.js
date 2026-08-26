@@ -17,9 +17,9 @@ export default function Navbar() {
       zIndex: 50,
       boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
     }}>
-      {/* CSS internal untuk mengatur responsif layar */}
+      {/* CSS untuk mengatur responsif */}
       <style>{`
-        .desktop-nav { display: flex; }
+        .desktop-nav { display: flex; flex-direction: column; align-items: center; gap: 16px; }
         .mobile-hamburger { display: none; }
         @media (max-width: 768px) {
           .desktop-nav { display: none !important; }
@@ -27,69 +27,96 @@ export default function Navbar() {
         }
       `}</style>
 
+      {/* --- TAMPILAN DESKTOP (Semua Rata Tengah) --- */}
+      <div className="desktop-nav">
+        
+        {/* Logo Gambar di Tengah */}
+        <div>
+          <a href="#home">
+            <img 
+              src="/logo.png" 
+              alt="Unikubali Logo" 
+              style={{ height: '45px', objectFit: 'contain', cursor: 'pointer' }} 
+            />
+          </a>
+        </div>
+
+        {/* Menu Navigasi Tengah */}
+        <div style={{ display: 'flex', gap: '40px', fontWeight: '600', fontSize: '15px' }}>
+          {['Home', 'Product', 'About Us'].map((menu) => {
+            const isActive = activeMenu === menu;
+            return (
+              <a 
+                key={menu}
+                href={`#${menu.toLowerCase()}`}
+                onClick={() => setActiveMenu(menu)}
+                style={{ 
+                  textDecoration: 'none', 
+                  color: isActive ? '#111827' : '#4b5563',
+                  borderBottom: isActive ? '2px solid #111827' : '2px solid transparent',
+                  paddingBottom: '4px',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                {menu}
+              </a>
+            );
+          })}
+        </div>
+
+        {/* Sosmed di Tengah */}
+        <div style={{ display: 'flex', gap: '20px', alignItems: 'center', paddingTop: '4px' }}>
+          <SocialIcons />
+        </div>
+      </div>
+
+      {/* --- TAMPILAN MOBILE (Rata Tengah) --- */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         
-        {/* Logo Unikubali */}
-        <div style={{ fontSize: '26px', fontWeight: '900', letterSpacing: '3px', color: '#111827', cursor: 'pointer' }}>
-          UNIKUBALI
+        {/* Logo Mobile di Kiri/Tengah */}
+        <div className="mobile-hamburger-logo" style={{ display: 'none' }}>
+          {/* Akan di-handle oleh media query */}
         </div>
 
-        {/* Menu & Sosmed (Hanya tampil di Laptop/PC) */}
-        <div className="desktop-nav" style={{ alignItems: 'center', gap: '40px' }}>
-          
-          {/* Menu Tengah */}
-          <div style={{ display: 'flex', gap: '40px', fontWeight: '600', fontSize: '15px' }}>
-            {['Home', 'Product', 'About Us'].map((menu) => {
-              const isActive = activeMenu === menu;
-              return (
-                <a 
-                  key={menu}
-                  href={`#${menu.toLowerCase()}`}
-                  onClick={() => setActiveMenu(menu)}
-                  style={{ 
-                    textDecoration: 'none', 
-                    color: isActive ? '#111827' : '#4b5563',
-                    borderBottom: isActive ? '2px solid #111827' : '2px solid transparent',
-                    paddingBottom: '4px',
-                    transition: 'all 0.2s ease'
-                  }}
-                >
-                  {menu}
-                </a>
-              );
-            })}
-          </div>
+        <div className="mobile-logo" style={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
+          <style>{`
+            @media (max-width: 768px) {
+              .mobile-logo { display: flex !important; justify-content: space-between !important; align-items: center !important; width: 100% !important; }
+            }
+          `}</style>
+          <a href="#home">
+            <img 
+              src="/logo.png" 
+              alt="Unikubali Logo" 
+              style={{ height: '38px', objectFit: 'contain', cursor: 'pointer' }} 
+            />
+          </a>
 
-          {/* Sosmed Kanan */}
-          <div style={{ display: 'flex', gap: '16px', alignItems: 'center', borderLeft: '1px solid #e5e7eb', paddingLeft: '30px' }}>
-            <SocialIcons />
-          </div>
+          {/* Tombol Hamburger di HP */}
+          <button 
+            className="mobile-hamburger"
+            onClick={() => setIsOpen(!isOpen)}
+            style={{ 
+              flexDirection: 'column', 
+              justifyContent: 'space-between', 
+              width: '24px', 
+              height: '18px', 
+              background: 'transparent', 
+              border: 'none', 
+              cursor: 'pointer',
+              padding: 0
+            }}
+            aria-label="Menu"
+          >
+            <div style={{ width: '100%', height: '3px', backgroundColor: '#111827', borderRadius: '2px' }}></div>
+            <div style={{ width: '100%', height: '3px', backgroundColor: '#111827', borderRadius: '2px' }}></div>
+            <div style={{ width: '100%', height: '3px', backgroundColor: '#111827', borderRadius: '2px' }}></div>
+          </button>
         </div>
-
-        {/* Tombol Hamburger (Hanya tampil di HP) */}
-        <button 
-          className="mobile-hamburger"
-          onClick={() => setIsOpen(!isOpen)}
-          style={{ 
-            flexDirection: 'column', 
-            justifyContent: 'space-between', 
-            width: '26px', 
-            height: '20px', 
-            background: 'transparent', 
-            border: 'none', 
-            cursor: 'pointer',
-            padding: 0
-          }}
-          aria-label="Menu"
-        >
-          <div style={{ width: '100%', height: '3px', backgroundColor: '#111827', borderRadius: '2px' }}></div>
-          <div style={{ width: '100%', height: '3px', backgroundColor: '#111827', borderRadius: '2px' }}></div>
-          <div style={{ width: '100%', height: '3px', backgroundColor: '#111827', borderRadius: '2px' }}></div>
-        </button>
 
       </div>
 
-      {/* Menu Dropdown khusus HP (Muncul saat ikon hamburger diklik) */}
+      {/* Menu Dropdown khusus HP (Rata Tengah) */}
       {isOpen && (
         <div style={{ 
           marginTop: '20px', 
@@ -97,6 +124,7 @@ export default function Navbar() {
           borderTop: '1px solid #f3f4f6', 
           display: 'flex', 
           flexDirection: 'column', 
+          alignItems: 'center',
           gap: '16px' 
         }}>
           {['Home', 'Product', 'About Us'].map((menu) => {
@@ -119,8 +147,8 @@ export default function Navbar() {
             );
           })}
 
-          {/* Deretan Sosmed di Menu HP */}
-          <div style={{ display: 'flex', gap: '20px', paddingTop: '12px', borderTop: '1px solid #f3f4f6' }}>
+          {/* Deretan Sosmed di Menu HP (Rata Tengah) */}
+          <div style={{ display: 'flex', gap: '20px', paddingTop: '12px', borderTop: '1px solid #f3f4f6', width: '100%', justifyContent: 'center' }}>
             <SocialIcons />
           </div>
         </div>
