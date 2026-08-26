@@ -1,4 +1,4 @@
-import "./globals.css";
+import "./globals.css"; // <- Baris ini sangat krusial!
 
 export const metadata = {
   title: "Unikubali | Etalase Aksesoris Rumah",
