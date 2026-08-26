@@ -39,13 +39,24 @@ export default function HeroSlider() {
   };
 
   return (
-    <div style={{ width: '100vw', margin: 0, padding: 0, fontFamily: 'sans-serif', overflow: 'hidden', position: 'relative', left: '50%', right: '50%', marginLeft: '-50vw', marginRight: '-50vw' }}>
+    <div style={{ 
+      width: '100vw', 
+      position: 'relative', 
+      left: '50%', 
+      right: '50%', 
+      marginLeft: '-50vw', 
+      marginRight: '-50vw', 
+      marginTops: 0,
+      padding: 0, 
+      fontFamily: 'sans-serif', 
+      overflow: 'hidden' 
+    }}>
       
       <style>{`
         .hero-slider-container {
           position: relative;
-          width: 100%;
-          height: calc(100vh - 90px); /* Full layar dikurangi tinggi navbar */
+          width: 100vw;
+          height: calc(100vh - 90px);
           min-height: 500px;
         }
         @media (max-width: 768px) {
