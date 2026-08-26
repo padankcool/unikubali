@@ -2,7 +2,7 @@ import "./globals.css";
 
 export const metadata = {
   title: "Unikubali | Etalase Aksesoris Rumah",
-  description: "Koleksi aksesoris rumah estetik, mulai dari vas keramik, lampu hias, hingga karpet anyaman berkualitas.",
+  description: "Koleksi aksesoris rumah buatan tangan estetik langsung dari Bali.",
 };
 
 export default function RootLayout({ children }) {
