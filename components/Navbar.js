@@ -8,29 +8,44 @@ export default function Navbar() {
       justifyContent: 'space-between', 
       alignItems: 'center',
       boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
-      fontFamily: 'sans-serif'
+      fontFamily: 'sans-serif',
+      position: 'sticky',
+      top: 0,
+      zIndex: 50
     }}>
       
-      {/* Logo */}
-      <div style={{ fontSize: '26px', fontWeight: '900', letterSpacing: '3px', color: '#111827' }}>
+      {/* Logo Unikubali */}
+      <div style={{ fontSize: '26px', fontWeight: '900', letterSpacing: '3px', color: '#111827', cursor: 'pointer' }}>
         UNIKUBALI
       </div>
 
-      {/* Menu Tengah */}
+      {/* Menu Navigasi Tengah */}
       <div style={{ display: 'flex', gap: '40px', fontWeight: '600', color: '#4b5563', fontSize: '15px' }}>
-        <a href="#" style={{ textDecoration: 'none', color: 'inherit' }}>Home</a>
-        <a href="#" style={{ textDecoration: 'none', color: 'inherit' }}>Product</a>
-        <a href="#" style={{ textDecoration: 'none', color: 'inherit' }}>About Us</a>
+        <a href="#home" style={{ textDecoration: 'none', color: 'inherit', transition: 'color 0.2s' }}>Home</a>
+        <a href="#product" style={{ textDecoration: 'none', color: 'inherit', transition: 'color 0.2s' }}>Product</a>
+        <a href="#about" style={{ textDecoration: 'none', color: 'inherit', transition: 'color 0.2s' }}>About Us</a>
       </div>
 
-      {/* Sosmed Kanan */}
-      <div style={{ display: 'flex', gap: '20px', color: '#6b7280', fontSize: '14px', fontWeight: '700' }}>
-        <span>IG</span>
-        <span>TikTok</span>
-        <span>WA</span>
-        <span>FB</span>
+      {/* Tombol Sosial Media di Kanan */}
+      <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" style={socialStyle}>IG</a>
+        <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" style={socialStyle}>TikTok</a>
+        <a href="https://whatsapp.com" target="_blank" rel="noopener noreferrer" style={socialStyle}>WA</a>
+        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" style={socialStyle}>FB</a>
       </div>
 
     </nav>
   );
 }
+
+// Gaya tombol sosmed agar terlihat seperti tombol kecil yang rapi
+const socialStyle = {
+  textDecoration: 'none',
+  backgroundColor: '#f3f4f6',
+  color: '#374151',
+  padding: '6px 12px',
+  borderRadius: '6px',
+  fontSize: '13px',
+  fontWeight: '700',
+  display: 'inline-block'
+};
