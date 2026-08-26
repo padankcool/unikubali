@@ -3,14 +3,9 @@ import HeroSlider from '../components/HeroSlider';
 
 export default function Home() {
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#fdfbf7', margin: 0, padding: 0 }}>
-      
-      {/* Modul 1: Navbar */}
+    <main style={{ backgroundColor: '#fdfbf7', margin: 0, padding: 0, width: '100%', overflowX: 'hidden' }}>
       <Navbar />
-
-      {/* Modul 2: Hero Slider Produk */}
       <HeroSlider />
-
-    </div>
+    </main>
   );
 }
