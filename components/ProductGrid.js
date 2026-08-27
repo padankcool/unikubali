@@ -33,11 +33,9 @@ const categories = [
 
 export default function ProductGrid() {
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [currentPage, setCurrentPage] = useState(1);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [previewImage, setPreviewImage] = useState(null); // State untuk Popup Gambar Full
-
-  const ITEMS_PER_PAGE = 8;
+  const [previewImage, setPreviewImage] = useState(null); // State untuk Popup
+  const [showAll, setShowAll] = useState(false); // State untuk tombol Show More
 
   // Handler Ganti Kategori dengan Animasi Halus
   const handleCategoryChange = (catId) => {
@@ -45,17 +43,7 @@ export default function ProductGrid() {
     setIsAnimating(true);
     setTimeout(() => {
       setSelectedCategory(catId);
-      setCurrentPage(1);
-      setIsAnimating(false);
-    }, 200);
-  };
-
-  // Handler Ganti Halaman
-  const handlePageChange = (pageNumber) => {
-    if (pageNumber === currentPage) return;
-    setIsAnimating(true);
-    setTimeout(() => {
-      setCurrentPage(pageNumber);
+      setShowAll(false); // Reset kembali ke 8 item saat ganti kategori
       setIsAnimating(false);
     }, 200);
   };
@@ -65,10 +53,8 @@ export default function ProductGrid() {
     ? productsData
     : productsData.filter(item => item.category === selectedCategory);
 
-  const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
-  const displayedProducts = selectedCategory === 'all'
-    ? filteredProducts.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
-    : filteredProducts;
+  // Menentukan produk yang ditampilkan (Dibatasi 8 atau Tampil Semua)
+  const displayedProducts = showAll ? filteredProducts : filteredProducts.slice(0, 8);
 
   return (
     <section id="product" style={{ padding: '80px 20px', maxWidth: '1200px', margin: '0 auto', fontFamily: 'sans-serif' }}>
@@ -195,7 +181,7 @@ export default function ProductGrid() {
                   {item.name}
                 </h3>
                 
-                {/* Tombol Pesan */}
+                {/* Tombol Pesan WhatsApp */}
                 <a 
                   href={`https://wa.me/?text=Halo%20Unikubali,%20saya%20tertarik%20dengan%20produk%20${encodeURIComponent(item.name)}`} 
                   target="_blank" 
@@ -224,32 +210,34 @@ export default function ProductGrid() {
         ))}
       </div>
 
-      {/* Navigasi Halaman (Pagination) */}
-      {selectedCategory === 'all' && totalPages > 1 && (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px', marginTop: '50px' }}>
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
-            const isActive = currentPage === page;
-            return (
-              <button
-                key={page}
-                onClick={() => handlePageChange(page)}
-                style={{
-                  width: '40px',
-                  height: '40px',
-                  borderRadius: '50%',
-                  border: isActive ? '1px solid #111827' : '1px solid #e5e7eb',
-                  backgroundColor: isActive ? '#111827' : '#ffffff',
-                  color: isActive ? '#ffffff' : '#4b5563',
-                  fontWeight: '700',
-                  fontSize: '14px',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease'
-                }}
-              >
-                {page}
-              </button>
-            );
-          })}
+      {/* Tombol Show More / Show Less */}
+      {filteredProducts.length > 8 && (
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
+          <button
+            onClick={() => setShowAll(!showAll)}
+            style={{
+              padding: '12px 32px',
+              borderRadius: '30px',
+              border: '2px solid #111827',
+              backgroundColor: 'transparent',
+              color: '#111827',
+              fontWeight: '700',
+              fontSize: '14px',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              letterSpacing: '0.5px'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = '#111827';
+              e.currentTarget.style.color = '#ffffff';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = 'transparent';
+              e.currentTarget.style.color = '#111827';
+            }}
+          >
+            {showAll ? 'Show Less' : 'Show More'}
+          </button>
         </div>
       )}
 
@@ -264,8 +252,8 @@ export default function ProductGrid() {
             right: 0,
             bottom: 0,
             backgroundColor: 'rgba(0, 0, 0, 0.85)',
-            backdropFilter: 'blur(5px)', // Efek buram pada latar belakang
-            zIndex: 9999,
+            backdropFilter: 'blur(5px)',
+            zIndex: 10000,
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
@@ -284,7 +272,7 @@ export default function ProductGrid() {
               color: '#ffffff',
               fontSize: '40px',
               cursor: 'pointer',
-              zIndex: 10000,
+              zIndex: 10001,
               padding: '10px'
             }}
           >
