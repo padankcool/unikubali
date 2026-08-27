@@ -55,11 +55,11 @@ export default function HeroSlider() {
         .hero-slider-container {
           position: relative;
           width: 100vw;
-          height: 520px; /* Ukuran layar lebar (widescreen) yang proporsional dan elegan */
+          height: 600px; /* Ditinggikan sedikit dari 520px ke 600px agar lebih proporsional */
         }
         @media (max-width: 768px) {
           .hero-slider-container {
-            height: 340px !important;
+            height: 380px !important;
           }
           .hero-title {
             font-size: 18px !important;
@@ -72,9 +72,9 @@ export default function HeroSlider() {
             max-width: 85% !important;
           }
           .slider-arrow {
-            width: 32px !important;
-            height: 32px !important;
-            font-size: 12px !important;
+            width: 34px !important;
+            height: 34px !important;
+            font-size: 13px !important;
           }
         }
       `}</style>
@@ -101,7 +101,7 @@ export default function HeroSlider() {
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />
             
-            {/* Kotak Latar Belakang Transparan Hitam (Elegan / Glassmorphism) untuk Teks */}
+            {/* Kotak Transparan Hitam (Glassmorphism Elegan) */}
             <div style={{
               position: 'absolute',
               bottom: '40px',
@@ -110,8 +110,8 @@ export default function HeroSlider() {
               maxWidth: '550px'
             }}>
               <div className="hero-caption-box" style={{
-                backgroundColor: 'rgba(0, 0, 0, 0.55)', // Hitam transparan elegan
-                backdropFilter: 'blur(6px)', // Efek blur kaca tipis yang mewah
+                backgroundColor: 'rgba(0, 0, 0, 0.55)',
+                backdropFilter: 'blur(6px)',
                 padding: '20px 24px',
                 borderRadius: '10px',
                 border: '1px solid rgba(255, 255, 255, 0.15)',
