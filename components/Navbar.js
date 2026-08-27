@@ -24,14 +24,16 @@ export default function Navbar() {
 
   return (
     <nav style={{ 
-      backgroundColor: '#ffffff', 
-      borderBottom: '1px solid #e5e7eb', 
+      backgroundColor: 'rgba(255, 255, 255, 0.92)', // Transparan halus
+      backdropFilter: 'blur(10px)', // Efek buram murni saat melayang di atas konten
+      WebkitBackdropFilter: 'blur(10px)',
+      borderBottom: '1px solid rgba(229, 231, 235, 0.8)', 
       padding: '16px 40px', 
       fontFamily: 'sans-serif',
       position: 'sticky',
       top: 0,
-      zIndex: 50,
-      boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
+      zIndex: 999, // Dipastikan selalu di lapisan paling atas
+      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)'
     }}>
       {/* CSS Responsif & Animasi Smooth Dropdown */}
       <style>{`
@@ -190,7 +192,6 @@ export default function Navbar() {
   );
 }
 
-// Komponen Pendukung Ikon Sosmed
 function SocialIcons() {
   return (
     <>
