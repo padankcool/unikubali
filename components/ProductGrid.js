@@ -46,7 +46,7 @@ export default function ProductGrid() {
           Koleksi Produk Kami
         </h2>
         <p style={{ color: '#6b7280', fontSize: '15px', margin: 0 }}>
-          Eksplorasi 14 mahakarya ornamen & kerajinan kuningan pilihan dari Unikubali.
+          Eksplorasi ornamen & kerajinan kuningan pilihan dari unikubali.
         </p>
       </div>
 
