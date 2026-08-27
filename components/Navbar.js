@@ -6,6 +6,22 @@ export default function Navbar() {
   const [activeMenu, setActiveMenu] = useState('Home');
   const [isOpen, setIsOpen] = useState(false);
 
+  // Fungsi untuk scroll halus ke section yang dituju
+  const handleNavClick = (e, targetId, menuName) => {
+    e.preventDefault();
+    setActiveMenu(menuName);
+    setIsOpen(false);
+
+    if (targetId === 'home') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      const element = document.getElementById(targetId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  };
+
   return (
     <nav style={{ 
       backgroundColor: '#ffffff', 
@@ -17,18 +33,31 @@ export default function Navbar() {
       zIndex: 50,
       boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
     }}>
-      {/* Pengaturan Responsif & Animasi Denyut (Pulse) */}
+      {/* CSS Responsif & Animasi Smooth Dropdown */}
       <style>{`
         @keyframes pulseEffect {
           0% { transform: scale(1); }
           50% { transform: scale(1.12); }
           100% { transform: scale(1); }
         }
+        @keyframes slideDownSmooth {
+          from {
+            opacity: 0;
+            transform: translateY(-12px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
         .pulse-hover:hover {
           animation: pulseEffect 0.8s infinite ease-in-out;
         }
         .desktop-navbar { display: flex; justify-content: space-between; align-items: center; width: 100%; }
         .mobile-navbar { display: none; }
+        .mobile-dropdown-smooth {
+          animation: slideDownSmooth 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
         @media (max-width: 768px) {
           .desktop-navbar { display: none !important; }
           .mobile-navbar { display: flex !important; justify-content: space-between !important; align-items: center !important; width: 100% !important; }
@@ -38,9 +67,14 @@ export default function Navbar() {
       {/* --- TAMPILAN DESKTOP --- */}
       <div className="desktop-navbar">
         
-        {/* 1. Logo di Kiri dengan Efek Denyut */}
+        {/* 1. Logo di Kiri */}
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <a href="#home" className="pulse-hover" style={{ display: 'inline-block', transition: 'transform 0.2s' }}>
+          <a 
+            href="#home" 
+            onClick={(e) => handleNavClick(e, 'home', 'Home')}
+            className="pulse-hover" 
+            style={{ display: 'inline-block', transition: 'transform 0.2s' }}
+          >
             <img 
               src="/logo.png" 
               alt="Unikubali Logo" 
@@ -53,11 +87,12 @@ export default function Navbar() {
         <div style={{ display: 'flex', gap: '35px', fontWeight: '600', fontSize: '15px' }}>
           {['Home', 'Product', 'About Us'].map((menu) => {
             const isActive = activeMenu === menu;
+            const targetId = menu.toLowerCase();
             return (
               <a 
                 key={menu}
-                href={`#${menu.toLowerCase()}`}
-                onClick={() => setActiveMenu(menu)}
+                href={`#${targetId}`}
+                onClick={(e) => handleNavClick(e, targetId, menu)}
                 style={{ 
                   textDecoration: 'none', 
                   color: isActive ? '#111827' : '#4b5563',
@@ -81,7 +116,7 @@ export default function Navbar() {
 
       {/* --- TAMPILAN MOBILE --- */}
       <div className="mobile-navbar">
-        <a href="#home">
+        <a href="#home" onClick={(e) => handleNavClick(e, 'home', 'Home')}>
           <img 
             src="/logo.png" 
             alt="Unikubali Logo" 
@@ -104,36 +139,41 @@ export default function Navbar() {
           }}
           aria-label="Menu"
         >
-          <div style={{ width: '100%', height: '3px', backgroundColor: '#111827', borderRadius: '2px' }}></div>
-          <div style={{ width: '100%', height: '3px', backgroundColor: '#111827', borderRadius: '2px' }}></div>
-          <div style={{ width: '100%', height: '3px', backgroundColor: '#111827', borderRadius: '2px' }}></div>
+          <div style={{ width: '100%', height: '3px', backgroundColor: '#111827', borderRadius: '2px', transition: 'all 0.3s' }}></div>
+          <div style={{ width: '100%', height: '3px', backgroundColor: '#111827', borderRadius: '2px', transition: 'all 0.3s' }}></div>
+          <div style={{ width: '100%', height: '3px', backgroundColor: '#111827', borderRadius: '2px', transition: 'all 0.3s' }}></div>
         </button>
       </div>
 
       {/* Menu Dropdown khusus HP */}
       {isOpen && (
-        <div style={{ 
-          marginTop: '16px', 
-          paddingTop: '16px', 
-          borderTop: '1px solid #f3f4f6', 
-          display: 'flex', 
-          flexDirection: 'column', 
-          alignItems: 'center',
-          gap: '16px' 
-        }}>
+        <div 
+          className="mobile-dropdown-smooth"
+          style={{ 
+            marginTop: '16px', 
+            paddingTop: '16px', 
+            borderTop: '1px solid #f3f4f6', 
+            display: 'flex', 
+            flexDirection: 'column', 
+            alignItems: 'center',
+            gap: '16px' 
+          }}
+        >
           {['Home', 'Product', 'About Us'].map((menu) => {
             const isActive = activeMenu === menu;
+            const targetId = menu.toLowerCase();
             return (
               <a 
                 key={menu}
-                href={`#${menu.toLowerCase()}`}
-                onClick={() => { setActiveMenu(menu); setIsOpen(false); }}
+                href={`#${targetId}`}
+                onClick={(e) => handleNavClick(e, targetId, menu)}
                 style={{ 
                   textDecoration: 'none', 
                   color: isActive ? '#111827' : '#4b5563', 
                   fontWeight: isActive ? '700' : '500',
                   fontSize: '16px',
-                  padding: '4px 0'
+                  padding: '4px 0',
+                  transition: 'color 0.2s ease'
                 }}
               >
                 {menu}
@@ -150,11 +190,10 @@ export default function Navbar() {
   );
 }
 
-// Komponen Pendukung Ikon Sosmed dengan Efek Denyut
+// Komponen Pendukung Ikon Sosmed
 function SocialIcons() {
   return (
     <>
-      {/* Instagram */}
       <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="pulse-hover" style={iconStyle}
          onMouseEnter={(e) => e.currentTarget.style.color = '#e1306c'} 
          onMouseLeave={(e) => e.currentTarget.style.color = '#4b5563'} title="Instagram">
@@ -163,7 +202,6 @@ function SocialIcons() {
         </svg>
       </a>
 
-      {/* TikTok */}
       <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" className="pulse-hover" style={iconStyle}
          onMouseEnter={(e) => e.currentTarget.style.color = '#000000'} 
          onMouseLeave={(e) => e.currentTarget.style.color = '#4b5563'} title="TikTok">
@@ -172,7 +210,6 @@ function SocialIcons() {
         </svg>
       </a>
 
-      {/* WhatsApp */}
       <a href="https://whatsapp.com" target="_blank" rel="noopener noreferrer" className="pulse-hover" style={iconStyle}
          onMouseEnter={(e) => e.currentTarget.style.color = '#25d366'} 
          onMouseLeave={(e) => e.currentTarget.style.color = '#4b5563'} title="WhatsApp">
@@ -181,7 +218,6 @@ function SocialIcons() {
         </svg>
       </a>
 
-      {/* Facebook */}
       <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="pulse-hover" style={iconStyle}
          onMouseEnter={(e) => e.currentTarget.style.color = '#1877f2'} 
          onMouseLeave={(e) => e.currentTarget.style.color = '#4b5563'} title="Facebook">
