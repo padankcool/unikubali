@@ -33,31 +33,81 @@ const categories = [
 
 export default function ProductGrid() {
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isAnimating, setIsAnimating] = useState(false);
 
+  const ITEMS_PER_PAGE = 8;
+
+  // Handler Ganti Kategori dengan Animasi Halus
+  const handleCategoryChange = (catId) => {
+    if (catId === selectedCategory) return;
+    setIsAnimating(true);
+    setTimeout(() => {
+      setSelectedCategory(catId);
+      setCurrentPage(1);
+      setIsAnimating(false);
+    }, 200);
+  };
+
+  // Handler Ganti Halaman dengan Animasi Halus
+  const handlePageChange = (pageNumber) => {
+    if (pageNumber === currentPage) return;
+    setIsAnimating(true);
+    setTimeout(() => {
+      setCurrentPage(pageNumber);
+      setIsAnimating(false);
+    }, 200);
+  };
+
+  // Filter Data Berdasarkan Kategori
   const filteredProducts = selectedCategory === 'all'
     ? productsData
     : productsData.filter(item => item.category === selectedCategory);
 
+  // Pagination khusus jika kategori "All Products" (atau jika item > 8)
+  const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
+  const displayedProducts = selectedCategory === 'all'
+    ? filteredProducts.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
+    : filteredProducts;
+
   return (
     <section id="product" style={{ padding: '80px 20px', maxWidth: '1200px', margin: '0 auto', fontFamily: 'sans-serif' }}>
       
+      {/* Animasi Transisi Halus (Smooth Fade-In) */}
+      <style>{`
+        @keyframes fadeInSmooth {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .grid-smooth-transition {
+          animation: fadeInSmooth 0.4s ease-out forwards;
+        }
+      `}</style>
+
+      {/* Judul Bagian */}
       <div style={{ textAlign: 'center', marginBottom: '40px' }}>
         <h2 style={{ fontSize: '32px', fontWeight: '800', color: '#111827', margin: '0 0 10px 0', letterSpacing: '1px' }}>
           Koleksi Produk Kami
         </h2>
         <p style={{ color: '#6b7280', fontSize: '15px', margin: 0 }}>
-          Eksplorasi ornamen & kerajinan kuningan pilihan dari unikubali.
+          Eksplorasi 14 mahakarya ornamen & kerajinan kuningan pilihan dari Unikubali.
         </p>
       </div>
 
-      {/* Navigasi Filter Kategori */}
+      {/* Tombol Filter Kategori */}
       <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', marginBottom: '45px', flexWrap: 'wrap' }}>
         {categories.map((cat) => {
           const isActive = selectedCategory === cat.id;
           return (
             <button
               key={cat.id}
-              onClick={() => setSelectedCategory(cat.id)}
+              onClick={() => handleCategoryChange(cat.id)}
               style={{
                 padding: '10px 22px',
                 borderRadius: '30px',
@@ -77,9 +127,18 @@ export default function ProductGrid() {
         })}
       </div>
 
-      {/* Grid Produk */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '30px' }}>
-        {filteredProducts.map((item) => (
+      {/* Grid Tampilan Produk */}
+      <div 
+        className={!isAnimating ? "grid-smooth-transition" : ""}
+        style={{ 
+          display: 'grid', 
+          gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', 
+          gap: '30px',
+          opacity: isAnimating ? 0 : 1,
+          transition: 'opacity 0.2s ease-in-out'
+        }}
+      >
+        {displayedProducts.map((item) => (
           <div 
             key={item.id} 
             style={{
@@ -90,7 +149,8 @@ export default function ProductGrid() {
               border: '1px solid #f3f4f6',
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'space-between'
+              justifyContent: 'space-between',
+              transition: 'transform 0.3s ease, boxShadow 0.3s ease'
             }}
           >
             <div>
@@ -101,7 +161,7 @@ export default function ProductGrid() {
                 <span style={{ fontSize: '11px', color: '#d4af37', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px' }}>
                   {item.category}
                 </span>
-                <h3 style={{ fontSize: '16px', fontWeight: '700', color: '#111827', margin: '6px 0 8px 0' }}>
+                <h3 style={{ fontSize: '16px', fontWeight: '700', color: '#111827', margin: '6px 0 8px 0', lineHeight: '1.4' }}>
                   {item.name}
                 </h3>
               </div>
@@ -122,7 +182,8 @@ export default function ProductGrid() {
                   borderRadius: '20px',
                   textDecoration: 'none',
                   fontSize: '12px',
-                  fontWeight: '600'
+                  fontWeight: '600',
+                  transition: 'background 0.2s ease'
                 }}
               >
                 Pesan
@@ -131,6 +192,35 @@ export default function ProductGrid() {
           </div>
         ))}
       </div>
+
+      {/* Navigasi Halaman (Pagination) - Khusus untuk All Products */}
+      {selectedCategory === 'all' && totalPages > 1 && (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px', marginTop: '50px' }}>
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
+            const isActive = currentPage === page;
+            return (
+              <button
+                key={page}
+                onClick={() => handlePageChange(page)}
+                style={{
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '50%',
+                  border: isActive ? '1px solid #111827' : '1px solid #e5e7eb',
+                  backgroundColor: isActive ? '#111827' : '#ffffff',
+                  color: isActive ? '#ffffff' : '#4b5563',
+                  fontWeight: '700',
+                  fontSize: '14px',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                {page}
+              </button>
+            );
+          })}
+        </div>
+      )}
 
     </section>
   );
