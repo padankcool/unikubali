@@ -43,12 +43,8 @@ export default function HeroSlider() {
 
   return (
     <div style={{ 
-      width: '100vw', 
+      width: '100%', 
       position: 'relative', 
-      left: '50%', 
-      right: '50%', 
-      marginLeft: '-50vw', 
-      marginRight: '-50vw', 
       padding: 0, 
       fontFamily: 'sans-serif', 
       overflow: 'hidden' 
@@ -57,11 +53,10 @@ export default function HeroSlider() {
       <style>{`
         .hero-slider-container {
           position: relative;
-          width: 100vw;
+          width: 100%;
           height: 600px;
         }
 
-        /* Styling Posisi Default Deskripsi (Desktop) */
         .hero-caption-wrapper {
           position: absolute;
           bottom: 40px;
@@ -70,7 +65,6 @@ export default function HeroSlider() {
           max-width: 550px;
         }
 
-        /* Tombol Get It Now Emas */
         .btn-get-it-now {
           background: linear-gradient(135deg, #d4af37 0%, #f3e5ab 50%, #aa7c11 100%);
           color: #1a1a1a;
@@ -85,12 +79,10 @@ export default function HeroSlider() {
           transform: translateY(-2px);
         }
 
-        /* Khusus Layar Mobile (HP) */
         @media (max-width: 768px) {
           .hero-slider-container {
             height: 420px !important;
           }
-          /* Posisi Kotak Teks Diturunkan Lebih Ke Bawah di HP */
           .hero-caption-wrapper {
             bottom: 15px !important;
             left: 15px !important;
@@ -141,7 +133,6 @@ export default function HeroSlider() {
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />
             
-            {/* Pembungkus Posisi Deskripsi */}
             <div className="hero-caption-wrapper">
               <div className="hero-caption-box" style={{
                 backgroundColor: 'rgba(0, 0, 0, 0.55)',
@@ -159,7 +150,6 @@ export default function HeroSlider() {
                   {slide.subtitle}
                 </p>
 
-                {/* Tombol Get It Now Warna Emas */}
                 <a 
                   href={slide.link}
                   className="btn-get-it-now"
@@ -187,7 +177,6 @@ export default function HeroSlider() {
           </div>
         ))}
 
-        {/* Tombol Panah Kiri */}
         <button 
           onClick={prevSlide}
           className="slider-arrow"
@@ -198,7 +187,6 @@ export default function HeroSlider() {
           ❮
         </button>
 
-        {/* Tombol Panah Kanan */}
         <button 
           onClick={nextSlide}
           className="slider-arrow"
@@ -209,7 +197,6 @@ export default function HeroSlider() {
           ❯
         </button>
 
-        {/* Indikator Titik (Dots) di Kanan Bawah */}
         <div style={{
           position: 'absolute',
           bottom: '20px',
