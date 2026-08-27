@@ -17,22 +17,29 @@ export default function Navbar() {
     } else {
       const element = document.getElementById(targetId);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Sedikit penyesuaian agar saat scroll, judul tidak tertutup navbar yang melayang
+        const offset = 80;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - offset;
+        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
       }
     }
   };
 
   return (
     <nav style={{ 
-      backgroundColor: 'rgba(255, 255, 255, 0.92)', // Transparan halus
-      backdropFilter: 'blur(10px)', // Efek buram murni saat melayang di atas konten
+      backgroundColor: 'rgba(255, 255, 255, 0.92)',
+      backdropFilter: 'blur(10px)',
       WebkitBackdropFilter: 'blur(10px)',
       borderBottom: '1px solid rgba(229, 231, 235, 0.8)', 
       padding: '16px 40px', 
       fontFamily: 'sans-serif',
-      position: 'sticky',
+      position: 'fixed', /* <-- Ini kunci utamanya, diubah jadi fixed */
       top: 0,
-      zIndex: 999, // Dipastikan selalu di lapisan paling atas
+      left: 0,
+      width: '100%',
+      boxSizing: 'border-box',
+      zIndex: 9999, /* Lapisan paling atas absolut */
       boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)'
     }}>
       {/* CSS Responsif & Animasi Smooth Dropdown */}
@@ -89,7 +96,7 @@ export default function Navbar() {
         <div style={{ display: 'flex', gap: '35px', fontWeight: '600', fontSize: '15px' }}>
           {['Home', 'Product', 'About Us'].map((menu) => {
             const isActive = activeMenu === menu;
-            const targetId = menu.toLowerCase();
+            const targetId = menu.toLowerCase().replace(' ', ''); // Perbaiki ID untuk "About Us" jadi "aboutus"
             return (
               <a 
                 key={menu}
@@ -163,7 +170,7 @@ export default function Navbar() {
         >
           {['Home', 'Product', 'About Us'].map((menu) => {
             const isActive = activeMenu === menu;
-            const targetId = menu.toLowerCase();
+            const targetId = menu.toLowerCase().replace(' ', '');
             return (
               <a 
                 key={menu}
