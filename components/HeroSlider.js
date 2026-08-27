@@ -60,21 +60,42 @@ export default function HeroSlider() {
           width: 100vw;
           height: 600px;
         }
+
+        /* Styling Posisi Default Deskripsi (Desktop) */
+        .hero-caption-wrapper {
+          position: absolute;
+          bottom: 40px;
+          left: 50px;
+          z-index: 2;
+          max-width: 550px;
+        }
+
+        /* Tombol Get It Now Emas */
         .btn-get-it-now {
-          background-color: rgba(255, 255, 255, 0.15);
-          color: #ffffff;
-          border: 1px solid rgba(255, 255, 255, 0.4);
-          backdrop-filter: blur(4px);
+          background: linear-gradient(135deg, #d4af37 0%, #f3e5ab 50%, #aa7c11 100%);
+          color: #1a1a1a;
+          border: 1px solid #ffe89e;
+          box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+          font-weight: 700;
         }
         .btn-get-it-now:hover {
-          background-color: #ffffff !important;
-          color: #111827 !important;
-          border-color: #ffffff !important;
-          box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+          background: linear-gradient(135deg, #f3e5ab 0%, #d4af37 50%, #c59b27 100%) !important;
+          color: #000000 !important;
+          box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+          transform: translateY(-2px);
         }
+
+        /* Khusus Layar Mobile (HP) */
         @media (max-width: 768px) {
           .hero-slider-container {
-            height: 380px !important;
+            height: 420px !important;
+          }
+          /* Posisi Kotak Teks Diturunkan Lebih Ke Bawah di HP */
+          .hero-caption-wrapper {
+            bottom: 15px !important;
+            left: 15px !important;
+            right: 15px !important;
+            max-width: 100% !important;
           }
           .hero-title {
             font-size: 18px !important;
@@ -84,11 +105,10 @@ export default function HeroSlider() {
             margin-bottom: 12px !important;
           }
           .hero-caption-box {
-            padding: 14px 16px !important;
-            max-width: 85% !important;
+            padding: 14px 18px !important;
           }
           .btn-get-it-now {
-            padding: 8px 14px !important;
+            padding: 8px 16px !important;
             font-size: 12px !important;
           }
           .slider-arrow {
@@ -121,14 +141,8 @@ export default function HeroSlider() {
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />
             
-            {/* Kotak Transparan Hitam (Glassmorphism Elegan) */}
-            <div style={{
-              position: 'absolute',
-              bottom: '40px',
-              left: '50px',
-              zIndex: 2,
-              maxWidth: '550px'
-            }}>
+            {/* Pembungkus Posisi Deskripsi */}
+            <div className="hero-caption-wrapper">
               <div className="hero-caption-box" style={{
                 backgroundColor: 'rgba(0, 0, 0, 0.55)',
                 backdropFilter: 'blur(6px)',
@@ -145,7 +159,7 @@ export default function HeroSlider() {
                   {slide.subtitle}
                 </p>
 
-                {/* Tombol "Get It Now!" Transparan dengan Ikon Keranjang */}
+                {/* Tombol Get It Now Warna Emas */}
                 <a 
                   href={slide.link}
                   className="btn-get-it-now"
@@ -153,18 +167,16 @@ export default function HeroSlider() {
                     display: 'inline-flex',
                     alignItems: 'center',
                     gap: '8px',
-                    padding: '10px 20px',
+                    padding: '10px 22px',
                     borderRadius: '30px',
                     textDecoration: 'none',
-                    fontWeight: '600',
                     fontSize: '13px',
                     letterSpacing: '0.5px',
                     transition: 'all 0.3s ease',
                     cursor: 'pointer'
                   }}
                 >
-                  {/* SVG */}
-                  <svg style={{ width: '16px', height: '16px' }} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <svg style={{ width: '16px', height: '16px' }} fill="none" stroke="currentColor" strokeWidth="2.2" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                   </svg>
                   Get It Now!
@@ -200,8 +212,8 @@ export default function HeroSlider() {
         {/* Indikator Titik (Dots) di Kanan Bawah */}
         <div style={{
           position: 'absolute',
-          bottom: '25px',
-          right: '40px',
+          bottom: '20px',
+          right: '30px',
           display: 'flex',
           gap: '8px',
           zIndex: 3
