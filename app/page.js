@@ -1,5 +1,7 @@
 import Navbar from '../components/Navbar';
 import HeroSlider from '../components/HeroSlider';
+import ProductGrid from '../components/ProductGrid';
+
 
 export default function Home() {
   return (
