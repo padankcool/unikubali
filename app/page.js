@@ -2,7 +2,6 @@ import Navbar from '../components/Navbar';
 import HeroSlider from '../components/HeroSlider';
 import ProductGrid from '../components/ProductGrid';
 import AboutUs from '../components/AboutUs';
-import RevealOnScroll from '../components/RevealOnScroll'; // <-- Import komponen animasi
 
 export default function Home() {
   return (
