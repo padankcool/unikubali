@@ -34,26 +34,23 @@ const categories = [
 export default function ProductGrid() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [isAnimating, setIsAnimating] = useState(false);
-  const [previewImage, setPreviewImage] = useState(null); // State untuk Popup
-  const [showAll, setShowAll] = useState(false); // State untuk tombol Show More
+  const [previewImage, setPreviewImage] = useState(null); 
+  const [showAll, setShowAll] = useState(false); 
 
-  // Handler Ganti Kategori dengan Animasi Halus
   const handleCategoryChange = (catId) => {
     if (catId === selectedCategory) return;
     setIsAnimating(true);
     setTimeout(() => {
       setSelectedCategory(catId);
-      setShowAll(false); // Reset kembali ke 8 item saat ganti kategori
+      setShowAll(false); 
       setIsAnimating(false);
     }, 200);
   };
 
-  // Filter Data
   const filteredProducts = selectedCategory === 'all'
     ? productsData
     : productsData.filter(item => item.category === selectedCategory);
 
-  // Menentukan produk yang ditampilkan (Dibatasi 8 atau Tampil Semua)
   const displayedProducts = showAll ? filteredProducts : filteredProducts.slice(0, 8);
 
   return (
@@ -71,11 +68,11 @@ export default function ProductGrid() {
 
         /* Efek Zoom Out Smooth pada Gambar */
         .product-img-zoom {
-          transform: scale(1.15); /* Ukuran dasar sedikit membesar */
+          transform: scale(1.15); 
           transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
         }
         .product-card:hover .product-img-zoom {
-          transform: scale(1); /* Efek ditarik mundur (zoom out) saat di-hover */
+          transform: scale(1); 
         }
 
         /* Animasi Muncul Popup Lightbox */
@@ -85,6 +82,53 @@ export default function ProductGrid() {
         }
         .popup-animate {
           animation: popupFade 0.3s ease-out forwards;
+        }
+
+        /* --- PENGATURAN GRID & RESPONSIVE HP --- */
+        .product-grid-container {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+          gap: 30px;
+        }
+
+        .product-action-wrapper {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-end;
+          gap: 10px;
+        }
+
+        /* KHUSUS LAYAR HP (Mobile View) */
+        @media (max-width: 768px) {
+          .product-grid-container {
+            grid-template-columns: repeat(2, 1fr) !important; /* Paksa jadi 2 kolom (kiri-kanan) */
+            gap: 12px !important; /* Kurangi jarak antar produk agar muat */
+          }
+          .product-card {
+            height: 260px !important; /* Pendekkan tinggi gambar di HP */
+          }
+          .product-overlay {
+            padding: 12px 10px !important; /* Kurangi ruang kosong di overlay */
+          }
+          .product-category-text {
+            font-size: 9px !important; /* Perkecil teks kategori */
+            margin-bottom: 4px !important;
+          }
+          .product-title {
+            font-size: 13px !important; /* Perkecil judul produk */
+            line-height: 1.2 !important;
+          }
+          .product-action-wrapper {
+            flex-direction: column !important; /* Pindahkan tombol pesan ke bawah judul */
+            align-items: flex-start !important;
+            gap: 8px !important;
+          }
+          .btn-pesan {
+            padding: 6px 12px !important;
+            font-size: 11px !important;
+            width: 100% !important; /* Tombol memanjang penuh agar mudah ditekan */
+            text-align: center !important;
+          }
         }
       `}</style>
 
@@ -127,11 +171,8 @@ export default function ProductGrid() {
 
       {/* Grid Tampilan Produk */}
       <div 
-        className={!isAnimating ? "grid-smooth-transition" : ""}
+        className={`product-grid-container ${!isAnimating ? "grid-smooth-transition" : ""}`}
         style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', 
-          gap: '30px',
           opacity: isAnimating ? 0 : 1,
           transition: 'opacity 0.2s ease-in-out'
         }}
@@ -140,9 +181,9 @@ export default function ProductGrid() {
           <div 
             key={item.id} 
             className="product-card"
-            onClick={() => setPreviewImage(item.image)} // Buka popup saat kartu diklik
+            onClick={() => setPreviewImage(item.image)} 
             style={{
-              backgroundColor: '#111827', // Latar gelap agar overlay menyatu
+              backgroundColor: '#111827', 
               borderRadius: '16px',
               overflow: 'hidden',
               boxShadow: '0 8px 25px rgba(0,0,0,0.1)',
@@ -151,7 +192,7 @@ export default function ProductGrid() {
               cursor: 'pointer'
             }}
           >
-            {/* Gambar Utama (Zoom Out) */}
+            {/* Gambar Utama */}
             <img 
               src={item.image} 
               alt={item.name} 
@@ -159,8 +200,8 @@ export default function ProductGrid() {
               style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
             />
 
-            {/* Overlay Gradien & Keterangan (Menyatu dengan Gambar) */}
-            <div style={{ 
+            {/* Overlay Gradien & Keterangan */}
+            <div className="product-overlay" style={{ 
               position: 'absolute', 
               bottom: 0, 
               left: 0, 
@@ -172,12 +213,12 @@ export default function ProductGrid() {
               flexDirection: 'column',
               justifyContent: 'flex-end'
             }}>
-              <span style={{ fontSize: '11px', color: '#d4af37', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '6px' }}>
+              <span className="product-category-text" style={{ fontSize: '11px', color: '#d4af37', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '6px' }}>
                 {item.category}
               </span>
               
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: '10px' }}>
-                <h3 style={{ fontSize: '18px', fontWeight: '700', margin: 0, lineHeight: '1.3' }}>
+              <div className="product-action-wrapper">
+                <h3 className="product-title" style={{ fontSize: '18px', fontWeight: '700', margin: 0, lineHeight: '1.3' }}>
                   {item.name}
                 </h3>
                 
@@ -186,7 +227,8 @@ export default function ProductGrid() {
                   href={`https://wa.me/?text=Halo%20Unikubali,%20saya%20tertarik%20dengan%20produk%20${encodeURIComponent(item.name)}`} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  onClick={(e) => e.stopPropagation()} // Mencegah klik tombol membuka popup gambar
+                  className="btn-pesan"
+                  onClick={(e) => e.stopPropagation()} 
                   style={{
                     backgroundColor: '#d4af37',
                     color: '#111827',
@@ -197,7 +239,8 @@ export default function ProductGrid() {
                     fontWeight: '700',
                     transition: 'all 0.2s ease',
                     boxShadow: '0 4px 10px rgba(0,0,0,0.3)',
-                    whiteSpace: 'nowrap'
+                    whiteSpace: 'nowrap',
+                    boxSizing: 'border-box'
                   }}
                   onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f3e5ab'}
                   onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#d4af37'}
@@ -244,7 +287,7 @@ export default function ProductGrid() {
       {/* --- POPUP / LIGHTBOX GAMBAR FULL --- */}
       {previewImage && (
         <div 
-          onClick={() => setPreviewImage(null)} // Tutup popup saat latar diklik
+          onClick={() => setPreviewImage(null)} 
           style={{
             position: 'fixed',
             top: 0,
@@ -260,7 +303,6 @@ export default function ProductGrid() {
             padding: '20px'
           }}
         >
-          {/* Tombol Silang Close */}
           <button 
             onClick={() => setPreviewImage(null)}
             style={{
@@ -283,7 +325,7 @@ export default function ProductGrid() {
             src={previewImage} 
             alt="Preview Full" 
             className="popup-animate"
-            onClick={(e) => e.stopPropagation()} // Mencegah gambar tertutup saat diklik
+            onClick={(e) => e.stopPropagation()} 
             style={{
               maxWidth: '100%',
               maxHeight: '90vh',
