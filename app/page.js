@@ -1,5 +1,6 @@
 import Navbar from '../components/Navbar';
 import HeroSlider from '../components/HeroSlider';
+import ParallaxDivider from '../components/ParallaxDivider'; // <-- Import Parallax
 import ProductGrid from '../components/ProductGrid';
 import AboutUs from '../components/AboutUs';
 import FloatingWhatsApp from '../components/FloatingWhatsApp';
@@ -8,7 +9,7 @@ export default function Home() {
   return (
     <main style={{ backgroundColor: '#fdfbf7', margin: 0, padding: 0, width: '100%' }}>
       
-      {/* 1. Navbar Melayang (Fixed & Stabil) */}
+      {/* 1. Navbar Melayang */}
       <Navbar />
 
       {/* 2. Hero Slider */}
@@ -16,10 +17,13 @@ export default function Home() {
         <HeroSlider />
       </section>
 
-      {/* 3. Katalog Produk (Tampil Instan & Responsif) */}
+      {/* 3. Efek Parallax Pemisah (Elegan & 100% Aman) */}
+      <ParallaxDivider />
+
+      {/* 4. Katalog Produk */}
       <ProductGrid />
 
-      {/* 4. Tentang Kami */}
+      {/* 5. Tentang Kami */}
       <AboutUs />
 
       {/* Footer Minimalis */}
@@ -27,7 +31,7 @@ export default function Home() {
         © {new Date().getFullYear()} UNIKUBALI. All rights reserved.
       </footer>
 
-      {/* Tombol WhatsApp (Aman & Ringan) */}
+      {/* Tombol WhatsApp */}
       <FloatingWhatsApp />
 
     </main>
