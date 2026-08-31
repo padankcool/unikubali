@@ -2,7 +2,8 @@ import Navbar from '../components/Navbar';
 import HeroSlider from '../components/HeroSlider';
 import ProductGrid from '../components/ProductGrid';
 import AboutUs from '../components/AboutUs';
-import RevealOnScroll from '../components/RevealOnScroll'; // <-- Import komponen animasi
+import RevealOnScroll from '../components/RevealOnScroll';
+import FloatingWhatsApp from '../components/FloatingWhatsApp'; // <-- Import tombol WA
 
 export default function Home() {
   return (
@@ -11,27 +12,30 @@ export default function Home() {
       {/* 1. Navbar Melayang (Sticky/Fixed) */}
       <Navbar />
 
-      {/* 2. Hero Slider (Muncul duluan tanpa efek scroll) */}
+      {/* 2. Hero Slider */}
       <section id="home">
         <HeroSlider />
       </section>
 
-      {/* 3. Katalog Produk (Dibungkus efek muncul perlahan) */}
+      {/* 3. Katalog Produk */}
       <RevealOnScroll delay={0.1}>
         <ProductGrid />
       </RevealOnScroll>
 
-      {/* 4. Tentang Kami (Dibungkus efek muncul perlahan) */}
+      {/* 4. Tentang Kami */}
       <RevealOnScroll delay={0.2}>
         <AboutUs />
       </RevealOnScroll>
 
-      {/* Footer (Juga dibungkus efek animasi) */}
+      {/* Footer */}
       <RevealOnScroll delay={0.1}>
         <footer style={{ backgroundColor: '#111827', color: '#9ca3af', padding: '30px 20px', textAlign: 'center', fontSize: '14px', fontFamily: 'sans-serif' }}>
           © {new Date().getFullYear()} UNIKUBALI. All rights reserved.
         </footer>
       </RevealOnScroll>
+
+      {/* Tombol WhatsApp Mengambang di Pojok Kanan Bawah */}
+      <FloatingWhatsApp />
 
     </main>
   );

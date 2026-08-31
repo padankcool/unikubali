@@ -1,6 +1,6 @@
 import './globals.css';
 
-// Ini adalah "Nyawa SEO" untuk unikubali.com nantinya
+// testing seo aja
 export const metadata = {
   title: 'Unikubali | Kerajinan Kuningan & Ornamen Premium Bali',
   description: 'Pusat pengrajin handle pintu kuningan, gagang kayu, dan aksesoris rumah estetik dengan kualitas premium asli dari Bali. Melayani custom desain.',
@@ -8,11 +8,11 @@ export const metadata = {
   openGraph: {
     title: 'Unikubali | Kerajinan Kuningan Premium',
     description: 'Tingkatkan kemewahan hunian Anda dengan sentuhan ukiran tradisional Bali. Lihat katalog kami sekarang!',
-    url: 'https://unikubali.com', // Nanti otomatis terbaca saat domain terpasang
+    url: 'https://unikubali.com', // sementaraa ajaa ini utnuk url kedepannya
     siteName: 'Unikubali',
     images: [
       {
-        url: '/slide-1.jpg', // Gambar ini yang akan muncul saat link di-share di WhatsApp/IG
+        url: '/slide-1.jpg', // slideede tampilin aja
         width: 1200,
         height: 630,
         alt: 'Unikubali Premium Brass Handle',
